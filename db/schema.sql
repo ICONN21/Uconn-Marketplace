@@ -1,0 +1,45 @@
+DROP DATABASE IF EXISTS items_db;
+CREATE DATABASE items_db;
+
+\c items_db;
+
+CREATE TABLE buy (
+  id INTEGER NOT NULL,
+  item_image VARCHAR(60) NOT NULL,
+  item_title VARCHAR(30) NOT NULL,
+  item_description TEXT NOT NULL,
+  active BOOLEAN NOT NULL,
+  date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE sell (
+  id INTEGER NOT NULL,
+  item_image VARCHAR(60) NOT NULL,
+  item_title VARCHAR(30) NOT NULL,
+  item_description TEXT NOT NULL,
+  active BOOLEAN NOT NULL,
+  date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE favorites (
+  id INTEGER NOT NULL,
+  item_image VARCHAR(60) NOT NULL,
+  item_title VARCHAR(30) NOT NULL,
+  item_description TEXT NOT NULL,
+  active BOOLEAN NOT NULL,
+  date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+/* DATABASE FOR PASSWORDS*/
+DROP DATABASE IF EXISTS user_db;
+CREATE DATABASE user_db;
+
+\c user_db;
+
+CREATE TABLE users (
+  id INTEGER NOT NULL,
+  user_name VARCHAR(30) NOT NULL,
+  user_password VARCHAR(20) NOT NULL,
+  date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
