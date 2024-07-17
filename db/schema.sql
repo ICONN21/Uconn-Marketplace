@@ -1,9 +1,9 @@
-DROP DATABASE IF EXISTS items_db;
-CREATE DATABASE items_db;
+DROP DATABASE IF EXISTS uconn_db;
+CREATE DATABASE uconn_db;
 
-\c items_db;
+\c uconn_db;
 
-CREATE TABLE buy (
+CREATE TABLE browse (
   id INTEGER NOT NULL,
   item_image VARCHAR(60) NOT NULL,
   item_title VARCHAR(30) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE buy (
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE sell (
+CREATE TABLE post (
   id INTEGER NOT NULL,
   item_image VARCHAR(60) NOT NULL,
   item_title VARCHAR(30) NOT NULL,
@@ -29,13 +29,6 @@ CREATE TABLE favorites (
   active BOOLEAN NOT NULL,
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
-
-
-/* DATABASE FOR PASSWORDS*/
-DROP DATABASE IF EXISTS user_db;
-CREATE DATABASE user_db;
-
-\c user_db;
 
 CREATE TABLE users (
   id INTEGER NOT NULL,
