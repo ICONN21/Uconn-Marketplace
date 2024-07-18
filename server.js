@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000; // Port the server will listen on, from e
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
+
 // Middleware to parse JSON and urlencoded data in request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

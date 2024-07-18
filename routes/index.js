@@ -16,5 +16,7 @@ router.get('/', (req, res) => {
     res.send('Welcome to the API!');
 });
 
+router.get
+
 // Export the router to be used in the main server setup
 module.exports = router;
