@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Favorite = sequelize.define('Favorite', {
+    const Favorite = sequelize.define('favorite', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

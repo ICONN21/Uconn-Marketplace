@@ -1,23 +1,12 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../config/connections');
-
 const User = require('./user');
-const Item = require('./item');
-const Favorite = require('./favorite');
+const Item = require('./items');
+const Favorite = require('./favorites');
 
-const db = {
-  User: User(sequelize, Sequelize.DataTypes),
-  Item: Item(sequelize, Sequelize.DataTypes),
-  Favorite: Favorite(sequelize, Sequelize.DataTypes),
-};
+// User.hasMany(Item, {
+//   foreignKey: ''
+// })
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
-module.exports = db;
+
+module.exports = { User, Item, Favorite}
