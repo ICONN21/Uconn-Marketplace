@@ -1,0 +1,57 @@
+<div class='menu-container'>
+
+  {{#each items as |item|}}
+    <div class='card-header col-md-10'>
+      {{item_image}}
+    </div>
+
+    <div class='item col-md-5'>
+      <h3>{{item_title}}</h3>
+      <h5>{{item_description}}</h5>
+
+      <div class="item-nav">
+        <button>Edit</button>
+        <button>Delete</button>
+      </div>
+
+    </div>
+  {{/each}}
+
+
+  <div class='add-item-container'>
+    <h2>
+      Create a new post!
+    </h2>
+    <form class='new-item-form'>
+      <label for='item_image'>
+        Image:
+      </label>
+      <br />
+      <textarea id='item_image' name='item_image' rows='2' cols='30'>
+        {{item_image}}
+      </textarea>
+      <br />
+       <label for='item_title'>
+        Title:
+      </label>
+      <br />
+      <textarea id='item_title' name='item_title' rows='2' cols='30'>
+        {{item_title}}
+      </textarea>
+      <br />
+      <label for='item_description'>
+        Description:
+      </label>
+      <br />
+      <textarea id='item_description' name='item_description' rows='5' cols='30'>
+        {{item_description}}
+      </textarea>
+      <br />
+      <button type='submit' value='Submit'>
+        POST!
+      </button>
+    </form>
+  </div>
+</div>
+<!-- This is the form for adding a new item! -->
+<script src='/js/add-dish.js'></script>

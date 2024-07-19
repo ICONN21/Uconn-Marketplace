@@ -1,12 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{title}}</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  {{{body}}}
-</body>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Post Page</title>
+    <link rel='stylesheet' href='/css/jass.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+  </head>
+
+  <body>
+    <div class='flex-column justify-space-around'>
+
+      <header class='display-flex justify-space-between align-center p-2'>
+        <div class="nav">
+          <button id="buy">BROWSE</button>
+          <button id="home">HOME</button>
+          <button id="sell">POST</button>
+          <button id="sign-out">Sign Out</button>
+        </div>
+      </header>
+
+      <main class='container container-fluid mt-5'>
+        {{{body}}}
+      </main>
+
+    </div>
+  </body>
+
 </html>
