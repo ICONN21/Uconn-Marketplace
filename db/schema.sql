@@ -3,21 +3,19 @@ CREATE DATABASE uconn_db;
 
 \c uconn_db;
 
-CREATE TABLE browse (
+CREATE TABLE item (
   id INTEGER NOT NULL,
   item_image VARCHAR(60) NOT NULL,
   item_title VARCHAR(30) NOT NULL,
   item_description TEXT NOT NULL,
-  active BOOLEAN NOT NULL,
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE post (
+CREATE TABLE item (
   id INTEGER NOT NULL,
   item_image VARCHAR(60) NOT NULL,
   item_title VARCHAR(30) NOT NULL,
   item_description TEXT NOT NULL,
-  active BOOLEAN NOT NULL,
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -26,7 +24,6 @@ CREATE TABLE favorites (
   item_image VARCHAR(60) NOT NULL,
   item_title VARCHAR(30) NOT NULL,
   item_description TEXT NOT NULL,
-  active BOOLEAN NOT NULL,
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 

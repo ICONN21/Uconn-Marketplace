@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 // Import other route handlers
-const itemRoutes = require('./itemRoutes');
-const userRoutes = require('./userRoutes');
-const authRoutes = require('./authRoutes');
+// const itemRoutes = require('./itemRoutes');
+// const userRoutes = require('./userRoutes');
+// const authRoutes = require('./authRoutes');
 
 // Use specific routes from other files
-router.use('/items', itemRoutes);  // Routes related to item operations
-router.use('/users', userRoutes);  // Routes related to user operations
-router.use('/auth', authRoutes);   // Routes related to authentication
+// router.use('/items', itemRoutes);  // Routes related to item operations
+// router.use('/users', userRoutes);  // Routes related to user operations
+// router.use('/auth', authRoutes);   // Routes related to authentication
 
 // Optionally, you can define some general routes here as well
 router.get('/', (req, res) => {

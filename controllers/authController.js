@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 // Handles user registration
-exports.signup = async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     // Extracting name, email, and password from request body
     const { name, email, password } = req.body;
@@ -23,10 +23,10 @@ exports.signup = async (req, res) => {
     // If an error occurs, return a status of 400 with the error message
     res.status(400).json({ error: error.message });
   }
-};
+});
 
 // Handles user login
-exports.login = async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     // Extracting email and password from request body
     const { email, password } = req.body;
@@ -49,10 +49,10 @@ exports.login = async (req, res) => {
     // If an error occurs, return a status of 400 with the error message
     res.status(400).json({ error: error.message });
   }
-};
+});
 
 // Handles user logout
-exports.logout = (req, res) => {
+router.post('/logout', (req, res) => {
   // Destroy the session
   req.session.destroy((err) => {
     if (err) {
@@ -62,4 +62,4 @@ exports.logout = (req, res) => {
     // If logout is successful, return a status of 200 with a success message
     res.status(200).json({ message: 'Logged out successfully' });
   });
-};
+});

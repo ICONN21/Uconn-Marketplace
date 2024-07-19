@@ -43,6 +43,6 @@ const routes = require('./routes');
 app.use(routes); // Use the imported routes for handling requests
 
 // Sync Sequelize models to the database and start the server
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () => console.log(`Now listening on port ${PORT}`)); // Start the server and log the listening port
 });
