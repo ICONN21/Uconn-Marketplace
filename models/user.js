@@ -1,6 +1,10 @@
-module.exports = (sequelize, DataTypes) => {
-    // Define the User model
-    const User = sequelize.define('User', {
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
+
+class User extends Model {}
+ 
+User.init(
+  {
       // Define attributes of the User model
       id: {
         type: DataTypes.INTEGER,
@@ -32,26 +36,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }, {
       // Model options
+      sequelize,
       tableName: 'users',  // Explicitly specify the table name in the database
       timestamps: true,   // Enables Sequelize to automatically add the `createdAt` and `updatedAt` fields
       underscored: true   // Indicates that snake_case should be used for column names instead of camelCase
     });
-  
-    // Define model associations
-    User.associate = models => {
-      // A user can have many items
-      User.hasMany(models.Item, {
-        foreignKey: 'user_id',
-        as: 'items'  // Optional: defines an alias for the association
-      });
-  
-      // A user can have many favorites
-      User.hasMany(models.Favorite, {
-        foreignKey: 'user_id',
-        as: 'favorites'  // Optional: defines an alias for the association
-      });
-    };
-  
-    return User;
-  };
+
+  module.exports = User;
   

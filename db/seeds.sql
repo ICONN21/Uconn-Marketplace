@@ -1,4 +1,4 @@
-INSERT INTO browse (id, item_image, item_title, item_description)
+INSERT INTO item (id, item_image, item_title, item_description)
 VALUES (001, '#', '3/4th violin', 'old violin 3/4ths sized but in good condition'),
        (002, '#', 'Coat', 'old coat in decent condition'),
        (003, '#', 'RV', 'old 2005 rv, sold as is!'),
@@ -8,7 +8,7 @@ VALUES (001, '#', '3/4th violin', 'old violin 3/4ths sized but in good condition
        (007, '#', 'ice skates', 'figure skates that need sharpening'),
        (008, '#', 'hot air balloon', '300 bucks a ride');
 
-INSERT INTO post (id, item_image, item_title, item_description)
+INSERT INTO item (id, item_image, item_title, item_description)
 VALUES (001, '#', 'chocolate', 'really good homemade chocolate'),
        (002, '#', 'darth vader', 'sucks at stealth'),
        (003, '#', 'ice skates', 'figure skates that need sharpening'),

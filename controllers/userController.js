@@ -1,8 +1,9 @@
 // Importing the User model from the Sequelize models
+const router = require('express').Router();
 const { User } = require('../models');
 
 // Fetches a user profile based on the user's ID
-exports.getProfileById = async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     // Attempt to retrieve a user by their primary key (ID)
     const user = await User.findByPk(req.params.id);
@@ -18,10 +19,10 @@ exports.getProfileById = async (req, res) => {
     // If there is an error during the database operation, return a 400 Bad Request error
     res.status(400).json({ error: error.message });
   }
-};
+});
 
 // Updates a user profile based on the user's ID
-exports.updateProfile = async (req, res) => {
+router.put('/:id',  async (req, res) => {
   try {
     // Destructuring name and email from the request body
     const { name, email } = req.body;
@@ -43,4 +44,4 @@ exports.updateProfile = async (req, res) => {
     // If there is an error during the update operation, return a 400 Bad Request error
     res.status(400).json({ error: error.message });
   }
-};
+});

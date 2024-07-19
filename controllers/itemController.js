@@ -1,9 +1,8 @@
 // Import models from the Sequelize setup
+const router = require('express').Router();
 const { Item, User, Favorite } = require('../models');
 
-module.exports = {
-  // Fetch and display all items
-  getAllItems: async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       // Retrieve all items and include associated user emails
       const itemData = await Item.findAll({
@@ -27,10 +26,9 @@ module.exports = {
       // Handle errors and send a 500 status code
       res.status(500).json(err);
     }
-  },
+  })
 
-  // Create a new item with details from request body
-  createItem: async (req, res) => {
+  router.post('/', withAuth, async (req, res) => {
     try {
       // Create a new item using data from request body and session user ID
       const newItem = await Item.create({
@@ -44,10 +42,9 @@ module.exports = {
       // Handle errors and send a 400 status code
       res.status(400).json(err);
     }
-  },
+  })
 
-  // Update an existing item
-  updateItem: async (req, res) => {
+  router.put('/:id', withAuth, async (req, res) => {
     try {
       // Update item details based on the item ID and request body
       const updatedItem = await Item.update(req.body, {
@@ -68,10 +65,9 @@ module.exports = {
       // Handle errors and send a 500 status code
       res.status(500).json(err);
     }
-  },
+  })
 
-  // Delete an item
-  deleteItem: async (req, res) => {
+  router.delete('/:id', withAuth, async (req, res) => {
     try {
       // Delete an item based on the ID and the user ID from session
       const itemData = await Item.destroy({
@@ -93,10 +89,9 @@ module.exports = {
       // Handle errors and send a 500 status code
       res.status(500).json(err);
     }
-  },
+  })
 
-  // Like an item and add it to favorites
-  likeItem: async (req, res) => {
+  router.post('/:id/like', withAuth, async (req, res) => {
     try {
       // Create a new favorite entry with user ID and item ID
       const newFavorite = await Favorite.create({
@@ -110,10 +105,9 @@ module.exports = {
       // Handle errors and send a 400 status code
       res.status(400).json(err);
     }
-  },
+  })
 
-  // Fetch and display all favorite items of the logged-in user
-  getFavorites: async (req, res) => {
+  router.get('/favorites', withAuth, async (req, res) => {
     try {
       // Retrieve all favorites for the logged-in user and include associated items and user emails
       const favoriteData = await Favorite.findAll({
@@ -145,5 +139,4 @@ module.exports = {
       // Handle errors and send a 500 status code
       res.status(500).json(err);
     }
-  },
-};
+  });

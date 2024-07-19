@@ -1,23 +1,41 @@
+const User = require('./user')
+const Item = require('./items');
+const Favorite = require('./favorites');
 const Sequelize = require('sequelize');
-const sequelize = require('../config/connections');
 
-const User = require('./user');
-const Item = require('./item');
-const Favorite = require('./favorite');
-
-const db = {
-  User: User(sequelize, Sequelize.DataTypes),
-  Item: Item(sequelize, Sequelize.DataTypes),
-  Favorite: Favorite(sequelize, Sequelize.DataTypes),
-};
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+User.hasMany(Item, {
+  foreignKey: 'user_id', // Specifies the field in Item that will act as the foreign key
+  as: 'items'            // This creates an alias for User.getItems() and User.setItems()
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Items belong to a User
+Item.belongsTo(User, {
+  foreignKey: 'user_id',
+  as: 'owner'            // This creates an alias for Item.getOwner() and Item.setOwner()
+});
 
-module.exports = db;
+// User has many Favorites
+User.hasMany(Favorite, {
+  foreignKey: 'user_id',
+  as: 'favorites'         // This creates an alias for User.getFavorites() and User.setFavorites()
+});
+
+// Favorites belong to a User
+Favorite.belongsTo(User, {
+  foreignKey: 'user_id',
+  as: 'user'              // This creates an alias for Favorite.getUser() and Favorite.setUser()
+});
+
+// Item has many Favorites
+Item.hasMany(Favorite, {
+  foreignKey: 'item_id',
+  as: 'favorites'         // This creates an alias for Item.getFavorites() and Item.setFavorites()
+});
+
+// Favorites belong to an Item
+Favorite.belongsTo(Item, {
+  foreignKey: 'item_id',
+  as: 'item'              // This creates an alias for Favorite.getItem() and Favorite.setItem()
+});
+
+module.exports = { User, Item, Favorite}
