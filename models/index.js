@@ -1,3 +1,6 @@
+
+const sequelize = require('./connection');
+const Sequelize = require('sequelize');
 const User = require('./user')
 const Item = require('./items');
 const Favorite = require('./favorites');
@@ -39,3 +42,4 @@ Favorite.belongsTo(Item, {
 });
 
 module.exports = { User, Item, Favorite}
+
