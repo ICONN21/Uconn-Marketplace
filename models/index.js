@@ -42,4 +42,3 @@ Favorite.belongsTo(Item, {
 });
 
 module.exports = { User, Item, Favorite}
-
