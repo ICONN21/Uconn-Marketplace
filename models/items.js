@@ -5,6 +5,12 @@ class Item extends Model {}
 
 Item.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     image: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -13,7 +19,7 @@ Item.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    discription: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },

@@ -1,6 +1,8 @@
 // Import models from the Sequelize setup
 const router = require('express').Router();
 const { Item, User, Favorite } = require('../models');
+const withAuth = require('../utils/auth');
+
 
 router.get('/', async (req, res) => {
     try {
@@ -18,7 +20,7 @@ router.get('/', async (req, res) => {
       const items = itemData.map((item) => item.get({ plain: true }));
 
       // Render the 'posts' view, passing in items and logged-in status
-      res.render('posts', { 
+      res.render('home', { 
         items,
         logged_in: req.session.logged_in 
       });
@@ -140,3 +142,5 @@ router.get('/', async (req, res) => {
       res.status(500).json(err);
     }
   });
+
+  module.exports = router;

@@ -12,9 +12,14 @@ const router = express.Router();
 // router.use('/auth', authRoutes);   // Routes related to authentication
 
 // Optionally, you can define some general routes here as well
-router.get('/', (req, res) => {
-    res.send('Welcome to the API!');
-});
+// router.get('/', (req, res) => {
+//     res.send('Welcome to the API!');
+// });
 
-// Export the router to be used in the main server setup
+// app.get('/', (req, res) => {
+//     res.render('home');
+//   });
+  // Export the router to be used in the main server setup
+
+
 module.exports = router;
