@@ -7,16 +7,23 @@
   <link rel="text/html" href="../../public/css/style.css">
 </head>
 <body>
+    <div class="col s12 teal lighten-2 center-align">
+
   {{> nav}}
   <main>
+    <div class="card-panel">
     <h1>Favorites</h1>
+    </div>
     {{#each favorites}}
+      <div class="card-panel">
       <div class="favorite">
-        <h2>{{this.item.title}}</h2>
+        <h4>{{this.item.title}}</h4>
         <p>{{this.item.description}}</p>
         <p>Posted by: {{this.item.user.email}}</p>
       </div>
+      </div>
     {{/each}}
   </main>
+  </div>
 </body>
 </html>
