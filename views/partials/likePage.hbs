@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -23,4 +23,15 @@
   </main>
   <script src="/public/scrpit.js"></script>
 </body>
-</html>
+</html> --}}
+<ul>
+  {{#each items}}
+    <li>
+      {{this.title}} - {{this.description}}
+      <form action="/favorites" method="POST" style="display:inline;">
+        <input type="hidden" name="item_id" value="{{this.id}}">
+        <button type="submit">Like</button>
+      </form>
+    </li>
+  {{/each}}
+</ul>
