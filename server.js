@@ -2,27 +2,36 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const { create } = require('express-handlebars');
-const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./models');
 const sequelize = require('./config/connection'); // Import Sequelize configuration
 const SequelizeStore = require('connect-session-sequelize')(session.Store); // For storing sessions in the database
 
+const routes = require('./controllers');
+const helpers = require('./utils/auth');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Set Handlebars as the templating engine
-const hbs = create({ extname: '.hbs', defaultLayout: 'main', layoutsDir: './views/layouts/' });
+const hbs = create({ 
+  extname: '.hbs', 
+  defaultLayout: 'main', 
+  layoutsDir: path.join(__dirname, 'views/layouts'),
+  helpers: helpers // Add helpers configuration here
+});
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
-app.set('views', './views');
+app.set('views', path.join(__dirname, 'views'));
 
 // Middleware to parse JSON and urlencoded data in request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(routes)
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static('public'));
 
 // Session configuration
 const sess = {
@@ -35,57 +44,6 @@ const sess = {
   })
 };
 app.use(session(sess)); // Tell Express to use the session configuration
-
-// Routes
-app.get('/', (req, res) => {
-  res.render('home', { title: 'Home' });
-});
-
-app.get('/login', (req, res) => {
-  res.render('login', { title: 'Login' });
-});
-
-app.get('/register', (req, res) => {
-  res.render('register', { title: 'Register' });
-});
-
-app.post('/register', (req, res) => {
-  const { username, password } = req.body;
-  db.User.create({
-    username: username,
-    password: password
-  })
-  .then(user => {
-    res.redirect('/users');
-  })
-  .catch(err => console.log(err));
-});
-
-app.get('/users', (req, res) => {
-  db.User.findAll()
-    .then(users => {
-      res.render('users', { title: 'Users', users });
-    })
-    .catch(err => console.log(err));
-});
-
-app.post('/delete-user', (req, res) => {
-  const { id } = req.body;
-  db.User.destroy({ where: { id } })
-    .then(() => {
-      res.redirect('/users');
-    })
-    .catch(err => console.log(err));
-});
-
-app.post('/update-user', (req, res) => {
-  const { id, username, password } = req.body;
-  db.User.update({ username, password }, { where: { id } })
-    .then(() => {
-      res.redirect('/users');
-    })
-    .catch(err => console.log(err));
-});
 
 // Sync Sequelize models to the database and start the server
 sequelize.sync().then(() => {

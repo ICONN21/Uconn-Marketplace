@@ -7,32 +7,30 @@ Favorite.init(
   {
     id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
-        model: 'users',
-        key: 'id'
-      }
+        model: 'user',
+        key: 'id',
+      },
     },
     itemId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
-        model: 'items',
-        key: 'id'
-      }
-    }
+        model: 'item',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
-    modelName: 'Favorite',
-    tableName: 'favorites',
-    timestamps: false
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'favorite',
   }
 );
 

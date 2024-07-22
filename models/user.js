@@ -1,46 +1,58 @@
 const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
-class User extends Model {}
- 
+class User extends Model {
+  checkPassword(loginPw) {
+    return bcrypt.compareSync(loginPw, this.password);
+  }
+}
+
 User.init(
   {
-      // Define attributes of the User model
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,  // Ensures that no two users can have the same username
-        validate: {
-          notEmpty: true  // Ensures the username is not empty
-        }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [8],
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,  // Ensures that no two users can have the same email
-        validate: {
-          isEmail: true  // Validates the email format
-        }
+    },
+  },
+  {
+    hooks: {
+      beforeCreate: async (newUserData) => {
+        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        return newUserData;
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [8, 100]  // Ensures the password is at least 8 characters long but no more than 100
-        }
-      }
-    }, {
-      // Model options
-      sequelize,
-      tableName: 'users',  // Explicitly specify the table name in the database
-      timestamps: true,   // Enables Sequelize to automatically add the `createdAt` and `updatedAt` fields
-      underscored: true   // Indicates that snake_case should be used for column names instead of camelCase
-    });
+      beforeUpdate: async (updatedUserData) => {
+        updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+        return updatedUserData;
+      },
+    },
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'user',
+  }
+);
 
-  module.exports = User;
-  
+module.exports = User;
