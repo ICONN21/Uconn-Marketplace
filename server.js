@@ -6,7 +6,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const sequelize = require('./config/connection'); // Import Sequelize configuration
 const SequelizeStore = require('connect-session-sequelize')(session.Store); // For storing sessions in the database
-
+const routes = require('./controllers');
 // Load environment variables from the .env file
 dotenv.config();
 
@@ -39,7 +39,7 @@ const sess = {
 app.use(session(sess)); // Tell Express to use the session configuration
 
 // Import routes from the routes directory
-const routes = require('./routes');
+
 app.use(routes); // Use the imported routes for handling requests
 
 // Sync Sequelize models to the database and start the server
