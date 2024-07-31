@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const postId = event.target.getAttribute('data-post-id');
       console.log('Button is working')
       try {
-        const response = await fetch(`/items/like/${postId}`, {
+        const response = await fetch(`/api/items/like/${postId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
