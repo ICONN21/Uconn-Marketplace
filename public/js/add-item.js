@@ -1,29 +1,31 @@
 async function newFormHandler(event) {
   event.preventDefault();
-  const image = document.querySelector('#item_image').value;
-  const title = document.querySelector('#item_title').value;
-  const description = document.querySelector('#item_description').value;
+  const image = document.querySelector('#item_image').value.trim();
+  const title = document.querySelector('#item_title').value.trim();
+  const description = document.querySelector('#item_description').value.trim();
 
-  // ? Send fetch request to add a new item
-  const response = await fetch(`/api/item`, {
-    method: 'POST',
-    body: JSON.stringify({
-      image,
-      title,
-      description,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  //if the item is added, the 'all' template will be rerendered
-  if (response.ok) {
-    document.location.replace('/');
+  if (title && description) {
+    const response = await fetch('/item', {  // Ensure this matches the POST route in your server
+      method: 'POST',
+      body: JSON.stringify({
+        item_image: image,
+        item_title: title,
+        item_description: description,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      document.location.replace('/browse'); // Redirect to the browse page if successful
+    } else {
+      const errorData = await response.json();
+      alert(`Failed to add item: ${errorData.message}`);
+    }
   } else {
-    alert('Failed to add item');
+    alert('Please fill in all fields');
   }
 }
 
-document
-  .querySelector('.new-item-form')
-  .addEventListener('submit', newFormHandler);
+document.querySelector('.new-item-form').addEventListener('submit', newFormHandler);

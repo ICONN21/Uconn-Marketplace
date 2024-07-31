@@ -1,7 +1,7 @@
 // Import models from the Sequelize setup
 const router = require('express').Router();
-const { Item, User, Favorite } = require('../models');
-const withAuth = require('../utils/auth');
+const { Item, User, Favorite } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 
 router.get('/', async (req, res) => {
@@ -109,38 +109,90 @@ router.get('/', async (req, res) => {
     }
   })
 
-  router.get('/favorites', withAuth, async (req, res) => {
+  router.post('/like/:id', async (req, res) => {
+    console.log('Hit post endpoint')
+    const itemId = req.params.id;
+    const userId = req.session.userId;  // Make sure the user ID is stored in session upon login
+  
     try {
-      // Retrieve all favorites for the logged-in user and include associated items and user emails
-      const favoriteData = await Favorite.findAll({
-        where: {
-          user_id: req.session.user_id,
-        },
-        include: [
-          {
-            model: Item,
-            include: [
-              {
-                model: User,
-                attributes: ['email'],
-              },
-            ],
-          },
-        ],
+      // Check if item already exists in favorites
+      const existingFavorite = await Favorite.findOne({
+        where: { itemId: itemId, userId: userId }
       });
-
-      // Convert complex Sequelize objects to a simpler format
-      const favorites = favoriteData.map((favorite) => favorite.get({ plain: true }));
-
-      // Render the 'favorites' view with favorites and logged-in status
-      res.render('favorites', { 
-        favorites,
-        logged_in: req.session.logged_in 
-      });
-    } catch (err) {
-      // Handle errors and send a 500 status code
-      res.status(500).json(err);
+  
+      if (!existingFavorite) {
+        // Add item to favorites
+        await Favorite.create({
+          itemId: itemId,
+          userId: userId
+        });
+        res.json({ message: 'Item added to favorites' });
+      } else {
+        res.status(409).json({ message: 'Item already in favorites' });
+      }
+    } catch (error) {
+      console.error('Failed to add favorite:', error);
+      res.status(500).json({ error: 'Failed to add item to favorites' });
     }
   });
+  
+
+  // router.get('/favorites', async (req, res) => {
+  //   try {
+  //     // Retrieve all favorites for the logged-in user and include associated items and user emails
+  //     const favoriteData = await Favorite.findAll({
+  //       where: {
+  //         user_id: req.session.user_id,
+  //       },
+  //       include: [
+  //         {
+  //           model: Item,
+  //           include: [
+  //             {
+  //               model: User,
+  //               attributes: ['email'],
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     });
+
+  //     // Convert complex Sequelize objects to a simpler format
+  //     const favorites = favoriteData.map((favorite) => favorite.get({ plain: true }));
+
+  //     // Render the 'favorites' view with favorites and logged-in status
+  //     res.render('favorites', { 
+  //       favorites,
+  //       logged_in: req.session.logged_in 
+  //     });
+  //   } catch (err) {
+  //     // Handle errors and send a 500 status code
+  //     res.status(500).json(err);
+  //   }
+  // });
+
+  // router.get('/favorites', withAuth, async (req, res) => {
+  //   console.log("accessing /favorites")
+  //   try {
+  //       if (!req.session.user_id) {
+  //           return res.status(401).json({ message: "Please log in to view favorites" });
+  //       }
+  
+  //       const favoriteData = await Favorite.findAll({
+  //           where: {
+  //               user_id: req.session.user_id,
+  //           },
+  //           include: [{
+  //               model: Item,
+  //           }]
+  //       });
+  
+  //       const favorites = favoriteData.map(favorite => favorite.get({ plain: true }));
+  //       res.render('favorites', { favorites, logged_in: req.session.logged_in });
+  //   } catch (err) {
+  //       console.error(err);
+  //       res.status(500).json(err);
+  //   }
+  // });
 
   module.exports = router;
