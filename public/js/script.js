@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.like-btn').forEach(button => {
     button.addEventListener('click', async (event) => {
       event.preventDefault();
-      const postId = event.target.getAttribute('data-id');
+      const postId = event.target.getAttribute('data-post-id');
       console.log('Button is working')
       try {
         const response = await fetch(`/items/like/${postId}`, {

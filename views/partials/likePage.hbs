@@ -13,7 +13,7 @@
       {{this.title}} - {{this.description}}
       <form method="POST" style="display:inline;">
         <input type="hidden" name="item_id" value="{{this.id}}">
-        <button type="button" class="like-btn">Like</button>
+        <button type="button" class="like-btn" data-post-id="{{this.id}}">Like</button>
       </form>
     </li>
   {{/each}}
