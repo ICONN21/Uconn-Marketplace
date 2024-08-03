@@ -8,7 +8,6 @@ router.get('/', async (req, res) => {
     const itemData = await Item.findAll();
 
     // Debugging: Log itemData to see what it contains
-    console.log('itemData:', itemData);
 
     // if (!itemData || itemData.length === 0) {
     //   // If itemData is null, undefined, or empty, send an error response

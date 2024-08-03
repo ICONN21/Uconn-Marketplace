@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     console.log('User endpoint', req.session)
     req.session.save(() => {
       req.session.loggedIn = true;
-      req.session.user_id = dbUserData.id
+      req.session.userId = dbUserData.id
       res.status(200).json(dbUserData);
     });
   } catch (err) {
@@ -50,14 +50,17 @@ router.post('/login', async (req, res) => {
         .json({ message: 'Incorrect email or password. Please try again!' });
       return;
     }
+    const user = dbUserData.get({plain: true})
 
+
+console.log('userId', user)
     req.session.save(() => {
       req.session.loggedIn = true;
-      req.session.user_id = dbUserData.id
+      req.session.userId = user.id
 
       res
         .status(200)
-        .json({ user: dbUserData, message: 'You are now logged in!' });
+        .json({ user: user, message: 'You are now logged in!' });
     });
   } catch (err) {
     console.log(err);

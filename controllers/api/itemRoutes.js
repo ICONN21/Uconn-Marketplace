@@ -113,7 +113,7 @@ router.get('/', async (req, res) => {
     console.log('Hit post endpoint')
     const itemId = req.params.id;
     const userId = req.session.userId;  // Make sure the user ID is stored in session upon login
-  
+  (console.log(req.session))
     try {
       // Check if item already exists in favorites
       const existingFavorite = await Favorite.findOne({

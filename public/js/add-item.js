@@ -5,7 +5,7 @@ async function newFormHandler(event) {
   const description = document.querySelector('#item_description').value.trim();
 
   if (title && description) {
-    const response = await fetch('/item', {  // Ensure this matches the POST route in your server
+    const response = await fetch('/api/items', {  // Ensure this matches the POST route in your server
       method: 'POST',
       body: JSON.stringify({
         item_image: image,
