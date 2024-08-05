@@ -16,23 +16,23 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    userName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
       validate: {
         isEmail: true,
-      },
+      }, 
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        len: [8],
+        len: [8, 100],
       },
     },
   },
@@ -56,3 +56,4 @@ User.init(
 );
 
 module.exports = User;
+

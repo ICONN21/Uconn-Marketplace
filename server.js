@@ -24,29 +24,30 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Middleware to parse JSON and urlencoded data in request bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(routes)
-
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static('public'));
-
-// Session configuration
 const sess = {
-  secret: process.env.SESSION_SECRET, // Secret key for signing the session ID cookie, from environment variables
-  cookie: {}, // Cookie settings, can be configured for security (e.g., httpOnly, secure)
+  secret: "secret" || process.env.SESSION_SECRET, // Secret key for signing the session ID cookie, from environment variables
+  cookie: { secure: true }, // Cookie settings, can be configured for security (e.g., httpOnly, secure)
   resave: false, // Avoid resaving sessions that haven't changed
-  saveUninitialized: true, // Save new sessions that have not been modified
+  saveUninitialized: false, // Save new sessions that have not been modified
   store: new SequelizeStore({
     db: sequelize // Use Sequelize to store session data in the database
   })
 };
 app.use(session(sess)); // Tell Express to use the session configuration
 
+// Middleware to parse JSON and urlencoded data in request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static('public'));
+
+
+app.use(routes)
 // Sync Sequelize models to the database and start the server
-sequelize.sync().then(() => {
+sequelize.sync({force: false}).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });

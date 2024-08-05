@@ -19,7 +19,7 @@ require('dotenv').config();
 //       logging: false,  // Controls the logging of SQL queries (set to false to disable, true to enable)
 //     }
 //   );
-let sequelize;
+// let sequelize;
 
 if (process.env.DB_URL) {
   sequelize = new Sequelize(process.env.DB_URL);
